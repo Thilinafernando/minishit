@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 19:48:49 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/23 23:46:40 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:26:20 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	form_env(char **env, t_info	*info)
 	info->env = malloc((count + 1) * sizeof(char *));
 	if (!info->env)
 	{
-		ft_printf(2, "ERROR WHILE COPYING ENV\n");
+		write(2, "ERROR WHILE COPYING ENV\n", 24);
 		return ;
 	}
 	count = 0;
@@ -47,7 +47,9 @@ void	ft_env(char **matrix, t_info *info)
 
 	if (matrix[1])
 	{
-		ft_printf(2, "Minishell: env: '%s': No arguments allowed\n", matrix[1]);
+		write(2, "Minishell: env: '", 17);
+		write(2, matrix[1], ft_strlen(matrix[1]));
+		write(2, "': No arguments allowed\n", 24);
 		estat(2, info);
 		return ;
 	}
@@ -55,7 +57,10 @@ void	ft_env(char **matrix, t_info *info)
 	while (info->env[i])
 	{
 		if (verify_equal(info->env[i]) != -1)
-			ft_printf(1 , "%s\n", info->env[i]);
+		{
+			write(1, info->env[i], ft_strlen(info->env[i]));
+			write(1, "\n", 1);
+		}
 		i++;
 	}
 	return (estat(0, info));

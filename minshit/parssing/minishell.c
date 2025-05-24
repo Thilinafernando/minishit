@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:10:33 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/23 19:59:09 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 23:02:15 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main(int ac, char **av, char **env)
 
 	if (ac != 1 || av[1])
 	{
-		write(2, "Error: Invalid arguments\n", 24);
+		write(2, "Error: Invalid arguments\n", 25);
 		return (1);
 	}
 	form_env(env, &info);
@@ -47,9 +47,9 @@ int main(int ac, char **av, char **env)
 			write(1, "exit\n", 5);  // Print exit message on Ctrl+D
 			break;
 		}
-		if (signal_status != 0)
+		if (signal_status == 131)
 		{
-			info.exit_status = signal_status;
+			info.exit_status = 130;
 			signal_status = 0;
 		}
 		if (line[0] != '\0')

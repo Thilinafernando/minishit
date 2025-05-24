@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:37:00 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/16 17:19:53 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:51:11 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	failure(int fd[2], t_info *info)
 {
 	close_fd(fd);
 	estat(1, info);
-	ft_printf(2, "minishell: execve failed!\n");
+	write(2, "minishell: execve failed!\n", 26);
 }
 void	failure_command(int fd[2], char **str, t_info *info)
 {
-	ft_printf(2, "minishell: %s: command not found\n", (*str));
+	write(2, "minishell: ", 11);
+	write(2, *str, ft_strlen(*str));
+	write(2, ": command not found\n", 20);
 	estat(127, info);
 	close_fd(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 01:31:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/23 23:53:25 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:17:46 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	padre(t_info *info)
 	info->fd_out_child = -420;
 	free3(info->exec);
 	free_mat(info->env);
-	// free(info->oldpwd);
 	close_fd(info->fd_in_out);
 	// close(0);
 	// close(1);

@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:46:45 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/23 17:44:45 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:25:11 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,10 @@ void	ft_cd(char **args, t_info *info)
 
 	home = home_path(info);
 	if (args[1] && args[2])
-		return (ft_printf(2, "MINISHELL: cd: too many arguments\n"), free(home), estat(1, info));
+	{
+		write(2, "MINISHELL: cd: too many arguments\n", 34);
+		return (free(home), estat(1, info));
+	}
 	if (args[1] == NULL || (ft_strcmp(args[1], "~") == 0))
 	{
 		update_oldpwd(&info->env, info);
@@ -164,13 +167,18 @@ void	ft_cd(char **args, t_info *info)
 		update_pwd(&info->env, info);
 		return (free(home), estat(0, info));
 	}
-	// else if ((ft_strcmp(args[1], "-") == 0))
-	// 	return (minus(info), free(home));
 	else if(args[1])
 	{
 		update_oldpwd(&info->env, info);
 		if (chdir(args[1]) != 0)
-			return (ft_printf(2, "Minishell: cd: %s: %s\n", args[1], strerror(errno)), free(home), estat(1, info));
+		{
+			write(2, "Minishell: cd: ", 15);
+			write(2, args[1], strlen(args[1]));
+			write(2, ": ", 2);
+			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(2, "\n", 1);
+			return (free(home), estat(1, info));
+		}
 		update_pwd(&info->env, info);
 		return (free(home), estat(0, info));
 	}

@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:48:21 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/23 17:39:32 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:34:08 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int	verify_unset(char *str, t_info *info)
 	i = 0;
 	if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || str[i] == '_'))
 	{
-		ft_printf(2, "Minishell: unset: %s: not a valid identifier\n", str);
+		write(2, "Minishell: unset: ", 18);
+		write(2, str, ft_strlen(str));
+		write(2, ": not a valid identifier\n", 25);
 		estat(1, info);
 		return (-1);
 	}
@@ -39,7 +41,9 @@ int	verify_unset(char *str, t_info *info)
 			i++;
 		else
 		{
-			ft_printf(2, "Minishell: unset: %s: not a valid identifier\n", str);
+			write(2, "Minishell: unset: ", 18);
+			write(2, str, ft_strlen(str));
+			write(2, ": not a valid identifier\n", 25);
 			estat(1, info);
 			return (-1);
 		}

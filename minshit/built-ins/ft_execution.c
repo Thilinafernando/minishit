@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:29:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/23 23:56:09 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:29:17 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@
 // 	close(pipefd[1]);
 // 	return (0);
 // }
-void	print_matrix(char **matrix)
-{
-	int	i = 0;
-
-	if (!matrix)
-	{
-		ft_printf(1, "Matrix is NULL\n");
-		return;
-	}
-	while (matrix[i])
-	{
-		ft_printf(1, "[%d]: %s\n", i, matrix[i]);
-		i++;
-	}
-	fflush(stdin);
-}
-
 void	one_exec(char **command, t_info *info, int fd[2])
 {
 	char	*str;
@@ -267,13 +250,13 @@ void	ft_execution(t_info *info)
 			while(info->exec[mat])
 			{
 				ft_redirections(info->exec[mat], info);
-				mat++;
 				if (info->fd_in_child != -420)
 					close(info->fd_in_child);
 				if (info->fd_out_child != -420)
 					close(info->fd_out_child);
 				info->fd_in_child = -420;
 				info->fd_out_child = -420;
+				mat++;
 			}
 			break;
 		}
@@ -292,7 +275,7 @@ void	ft_execution(t_info *info)
 		{
 			if (pipe(cpipe) == -1)
 			{
-				ft_printf(2, "Minishell: error pipe\n");
+				write(2, "Minishell: error pipe\n", 22);
 					return (estat(1, info));
 			}
 		}
@@ -333,7 +316,7 @@ void	ft_execution(t_info *info)
 		if (pid == -1)
 		{
 			free_all(info);
-			ft_printf(2, "Minishell: error fork");
+			write(2, "Minishell: error fork\n", 22);
 			exit(1);
 		}
 		if (pid == 0)
@@ -343,14 +326,14 @@ void	ft_execution(t_info *info)
 			if (i != 0 && prevpipe != -42)
 			{
 				if (dup2(prevpipe, 0) == -1)
-					return (ft_printf(2, "Minishell: error dup2\n"), free_all(info), exit(1));
+					return (write(2, "Minishell: error dup2\n", 22), free_all(info), exit(1));
 				close(prevpipe);
 			}
 			if (i != (count - 1))
 			{
 				close(cpipe[0]);
 				if (dup2(cpipe[1], 1) == -1)
-					return (ft_printf(2, "Minishell: error dup2\n"), free_all(info), exit(1));
+					return (write(2, "Minishell: error dup2\n", 22), free_all(info), exit(1));
 				close(cpipe[1]);
 			}
 			if (flag == 1)
@@ -363,21 +346,19 @@ void	ft_execution(t_info *info)
 			if (info->fd_in_child != -420)
 			{
 				if (dup2(info->fd_in_child, 0) == -1)
-					return (ft_printf(2, "Minishell: error dup2\n"), free_all(info), exit(1));
+					return (write(2, "Minishell: error dup2\n", 22), free_all(info), exit(1));
 				close(info->fd_in_child);
 			}
 			if (info->fd_out_child != -420)
 			{
 				if (dup2(info->fd_out_child, 1) == -1)
-					return (ft_printf(2, "Minishell: error dup2\n"), free_all(info), exit(1));
+					return (write(2, "Minishell: error dup2\n", 22), free_all(info), exit(1));
 				close(info->fd_out_child);
 			}
 			if (is_builtin(info->exec[mat]))
 			{
-				close(info->fd_in_out[0]);
-				close(info->fd_in_out[1]);
 				exec_builtin(info->exec[mat], info);
-				padre(info);
+				free_all(info);
 				exit(info->exit_status);
 			}
 			else
@@ -416,22 +397,25 @@ void	ft_execution(t_info *info)
 		i++;
 	}
 	j = 0;
+	signal(SIGINT, SIG_IGN);
 	while (j < pid_counts)
 	{
 		if (waitpid(pids[j], &status, 0) == -1)
 		{
-			ft_printf(2, "Minishell: error waitpid\n");
-			free_all(info);
+			write(2, "Minishell: error waitpid\n", 25);
+			padre(info);
 			exit(1);
 		}
-		if (j == (pid_counts - 1))
+		if (pids[j] == (pids[pid_counts - 1]))
 		{
 			if (WIFEXITED(status))
 				info->exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
-				if (WTERMSIG(status) == SIGQUIT)
-					ft_printf(2, "Quit (core dumped)\n");
+				if (WTERMSIG(status) == SIGINT)
+					info->exit_status = 128 + WTERMSIG(status);
+				else if (WTERMSIG(status) == SIGQUIT)
+					write(2, "Quit (core dumped)\n", 19);
 				info->exit_status = 128 + WTERMSIG(status);
 			}
 		}

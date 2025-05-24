@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 22:13:33 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/16 17:11:20 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:55:34 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	checks(char **args, int i, int flag)
 {
 	if ((ft_strncmp(args[i], "-n", 2) != 0))
 	{
-		printf("%s", args[i]);
+		write(1, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
-			printf(" ");
+			write(1, " ", 1);
 		flag = 0;
 	}
 	if ((ft_strncmp(args[i], "-n", 2) == 0) && flag != 1)
 	{
-		printf("%s", args[i]);
+		write(1, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
-			printf(" ");
+			write(1, " ", 1);
 	}
 	return (flag);
 }
@@ -46,16 +46,16 @@ void	ft_echo(char **args, t_info *info)
 	flag = 0;
 	if (!args[1])
 	{
-		ft_printf(1, "\n");
+		write(1, "\n", 1);
 		return ;
 	}
 	while (args[i])
 	{
 		if (ft_strncmp(args[1], "-n", 2) != 0 && i == 1)
 		{
-			printf("%s", args[i]);
+			write(1, args[i], ft_strlen(args[i]));
 			if (args[i + 1])
-				printf(" ");
+				write(1, " ", 1);
 		}
 		else if ((ft_strncmp(args[1], "-n", 2) == 0 && i == 1))
 			flag = 1;
@@ -64,7 +64,7 @@ void	ft_echo(char **args, t_info *info)
 		i++;
 	}
 	if (args[1] && ft_strncmp(args[1], "-n", 2) != 0)
-		printf("\n");
+		write(1, "\n", 1);
 	return (estat(0, info));
 }
 

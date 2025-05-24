@@ -6,7 +6,7 @@
 /*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 01:47:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/23 23:33:02 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:58:39 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,16 @@ int	append(char **matrix, char *args)
 	pos = exisit(matrix, args);
 	if (pos != -1)
 	{
-		free(matrix[pos]);
-		matrix[pos] = ft_strdup(args);
+		if ((verify_equal(args) == -1) && (verify_equal(matrix[pos]) == 0))
+		{
+			free(matrix[pos]);
+			matrix[pos] = ft_strjoin(args, "=");
+		}
+		else
+		{
+			free(matrix[pos]);
+			matrix[pos] = ft_strdup(args);
+		}
 		flag = 1;
 	}
 	return (flag);
@@ -134,8 +142,10 @@ char	**matrix_join(t_info *info, char **args, int size)
 	while(args[j])
 	{
 		if (append(new, args[j]) != 1)
+		{
 			new[i] = ft_strdup(args[j]);
-		i++;
+			i++;
+		}
 		j++;
 	}
 	free_mat(info->tmp);
@@ -196,30 +206,28 @@ void	print_export(t_info *info)
 	int	i;
 	int	j;
 	int	flag;
-	char	c;
 
 	i = -1;
-	c = 34;
 	sorting(info);
-	while(info->tmp[++i])
+	while (info->tmp[++i])
 	{
 		if (ft_strncmp(info->tmp[i], "_=", 2) == 0)
 			continue;
 		flag = 0;
 		j = -1;
-		ft_printf(1, "declare -x ");
+		write(1, "declare -x ", 11);
 		while (info->tmp[i][++j])
 		{
-			ft_printf(1, "%c", info->tmp[i][j]);
-			if ((info->tmp[i][j] == 61 && flag == 0))
+			write(1, &info->tmp[i][j], 1);
+			if (info->tmp[i][j] == '=' && flag == 0)
 			{
-				ft_printf(1, "%c", c);
+				write(1, "\"", 1);
 				flag = 1;
 			}
-			if ((!info->tmp[i][j + 1] && flag != 0))
-				ft_printf(1, "%c", c);
+			if (!info->tmp[i][j + 1] && flag != 0)
+				write(1, "\"", 1);
 		}
-		ft_printf(1, "\n");
+		write(1, "\n", 1);
 	}
 	free_mat(info->tmp);
 }
@@ -245,7 +253,9 @@ void	ft_export(t_info *info, char **args)
 	{
 		if((verify(args[i]) != 0))
 		{
-			ft_printf(2, "Minishell: export: '%s' : not a valid identifier\n", args[i]);
+			write(2, "Minishell: export: '", 20);
+			write(2, args[i], ft_strlen(args[i]));
+			write(2, "' : not a valid identifier\n", 27);
 			estat(1, info);
 		}
 		else
