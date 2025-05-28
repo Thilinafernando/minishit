@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   refresh_redirections.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:55:28 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/13 18:04:24 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:02:27 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_refresh_fd(t_info *info)
 {

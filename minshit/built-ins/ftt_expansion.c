@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ftt_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:01:54 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/16 19:28:27 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:43:17 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-static char	*get_var_name(const char *line, int *i)
+char	*get_var_name(const char *line, int *i)
 {
 	int		start;
 	char	*var;
@@ -29,7 +29,7 @@ static char	*get_var_name(const char *line, int *i)
 	return (var);
 }
 
-static char	*append_and_free(char *dst, char *segment)
+char	*append_and_free(char *dst, char *segment)
 {
 	char	*temp;
 
@@ -43,13 +43,30 @@ static char	*append_and_free(char *dst, char *segment)
 	return (temp);
 }
 
+void	append_variable(char **result, char *line, int *i, int *start, t_info *info)
+{
+	char	*segment;
+	char	*var;
+	char	*val;
+
+	if (*i > *start)
+	{
+		segment = ft_substr(line, *start, *i - *start);
+		*result = append_and_free(*result, segment);
+	}
+	(*i)++;
+	var = get_var_name(line, i);
+	val = mdollar(var, info);
+	free(var);
+	*result = append_and_free(*result, val);
+	*start = *i;
+}
+
 char	*expand_dollar1(char *line, t_info *info)
 {
 	int		i;
 	int		start;
 	char	*result;
-	char	*var;
-	char	*val;
 	char	*segment;
 
 	i = 0;
@@ -59,19 +76,7 @@ char	*expand_dollar1(char *line, t_info *info)
 	{
 		if (line[i] == '$'
 			&& (line[i + 1] == '?' || ft_isalpha(line[i + 1]) || line[i + 1] == '_'))
-		{
-			if (i > start)
-			{
-				segment = ft_substr(line, start, i - start);
-				result = append_and_free(result, segment);
-			}
-			i++;
-			var = get_var_name(line, &i);
-			val = mdollar(var, info);
-			free(var);
-			result = append_and_free(result, val);
-			start = i;
-		}
+			append_variable(&result, line, &i, &start, info);
 		else
 			i++;
 	}
@@ -84,3 +89,4 @@ char	*expand_dollar1(char *line, t_info *info)
 		return (ft_strdup(""));
 	return (result);
 }
+

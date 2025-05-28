@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:15:16 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:52:12 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:34:40 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// in command line execcution remember to reset the sigs on every fork and make sure that the parent waits for sigs of the child
-
-#include "minishell.h"
+#include "../minishell.h"
 
 void	estat(int i, t_info *info)
 {
@@ -42,14 +40,6 @@ void	ctrl_c(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
-
-void	sigquit(int sig)
-{
-	(void)sig;
-	// ft_printf(1, "Quit (core dumped)\n");
-	sstat(131);
-}
-
 void	set_signals(void)
 {
 	signal(SIGINT, ctrl_c);

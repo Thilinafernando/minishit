@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:47:13 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:33:25 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:33:48 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*ft_pwd(t_info *info)
 {
-	char	*buf; //THE-PATH_MAX-ON-LINUX
+	char	*buf;
 
-	buf = getcwd(NULL, 0); // AUTOMATICALLY ALLOCATES MEMORY NESSCARY FOR  THE PATH
+	buf = getcwd(NULL, 0);
 	if (!buf)
 	{
 		write(2, "pwd: error while retrieving current directory: getcwd\n", 54);
@@ -34,12 +34,3 @@ void	print_pwd(t_info *info)
 	write(1, "\n", 1);
 	free(pwd);
 }
-
-/* int	main()
-{
-	char	*hh;
-
-	hh = ft_pwd();
-	printf("%s\n", hh);
-	free(hh);
-} */

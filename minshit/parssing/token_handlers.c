@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_handlers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:22:11 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/22 19:35:38 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/05/28 22:59:59 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built-ins/minishell.h"
+#include "../minishell.h"
 
 t_token	*handle_special_chars(char *input, int *i,
 	t_token *head, t_parse_ctx *full_ctx)

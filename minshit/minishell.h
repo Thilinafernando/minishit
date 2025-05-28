@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:09:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/23 23:50:47 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:04:13 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
-# include "../libprintf/ft_printf.h"
-# include "../get_next_line/get_next_line.h"
+# include "libft/libft.h"
+# include "libprintf/ft_printf.h"
+# include "get_next_line/get_next_line.h"
 
 # include <stdlib.h>
 #include <sys/wait.h>
@@ -44,12 +44,17 @@ typedef struct s_info {
 	char	**env;
 	char	**tmp;
 	int		size;
-	// char	*oldpwd;
 	int		fd_in_out[2];
 	int		exit_status;
 	int		fd_in_child;
 	int		fd_out_child;
 	char	*heredoc;
+	pid_t	pids[128];
+	int		pid_counts;
+	int		prevpipe;
+	int		mat;
+	int		count;
+	int		flag;
 } t_info;
 
 typedef enum {
@@ -83,6 +88,7 @@ typedef struct s_parse_ctx
 
 // built-ins / handle malloc fails and general errors
 char	*ft_pwd(t_info *info);
+void	err_cd(char *arg);
 void	free_mat(char **matrix);
 int		exisit(char **matrix, char *arg);
 void	matrix_tmp(t_info *info);
@@ -94,7 +100,7 @@ void	ft_unset(t_info *info, char **args);
 void	ft_export(t_info *info, char **args);
 void	ft_env(char **matrix, t_info *info);
 void	ft_cd(char **args, t_info *info);
-void	ft_echo(char **args, t_info *info);
+int	ft_echo(char **args, t_info *info);
 void	ft_exit(char **args, t_info *info);
 void	ft_pipe_exit(char **args, t_info *info);
 
@@ -116,12 +122,37 @@ char	*expand_dollar1(char *line, t_info *info);
 // pipe and proccess
 void	ft_execution(t_info *info);
 void	close_fd(int *ar);
-void		failure(int fd[2], t_info *info);
-void		failure_command(int fd[2], char **str, t_info *info);
+void	failure(int fd[2], t_info *info);
+void	failure_command(int fd[2], char **str, t_info *info);
 char	*abs_path(char *command, t_info *info);
 char	*build_full(char *path, char *command);
 char	**find_path(char **envp);
 int		is_directory(const char *path);
+int		builtout_re(char ***matrix, t_info *info);
+int		is_builtin(char **matrix);
+int		is_builtout(char ***matrix, t_info *info);
+int		is_only_redirection(char ***matrix);
+void	block_only_rd(t_info *info);
+void	block_rd(t_info *info);
+void	one_exec(char **command, t_info *info, int fd[2]);
+void	child_pt2(t_info *info);
+void	child_pt1(t_info *info, int *i, int (*cpipe)[2]);
+void	child_block(t_info *info, int *i, int (*cpipe)[2]);
+int		ft_redirections(char **matrix, t_info *info);
+int		is_redirection(char **matrix);
+int		is_builtin(char **matrix);
+void	exec_builtin(char **matrix, t_info *info);
+int		builtout_process(char ***matrix, t_info *info, int mat);
+void	parent_block(t_info *info, int *i, pid_t pid, int (*cpipe)[2]);
+void	fail_wait(t_info *info);
+void	wait_block(t_info *info);
+void	process_count_blocks(char ***exec, int *i, int *count, int *cmd_rd);
+int		count_exec_blocks(char ***exec);
+void	init_exectution(int (*cpipe)[2], t_info *info);
+void	fork_block(t_info *info, pid_t *pid, int (*cpipe)[2], int *i);
+void	final_block(t_info *info);
+int		execution_half(t_info *info, int (*cpipe)[2], int *i);
+
 
 // signals
 void	estat(int i, t_info *info);
@@ -136,9 +167,7 @@ void	save_other(t_info *info, t_token **token);
 void	ft_conditions(t_info *info, t_token **token);
 void	form_main(t_token *token, t_info *info);
 
-// test functions
-void ft_listadd_back(t_token **lst, t_token *new);
-t_token *ft_newnode(char *content, t_token_type type);
+// util functions
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 void	ft_refresh_fd(t_info *info);
 int		if_out(char ***exec, int mat);
@@ -147,7 +176,6 @@ void	ft_remove(char ***matrix);
 
 
 
-int is_builtin(char **matrix);
 
 // free
 void	free3(char ***matrix);

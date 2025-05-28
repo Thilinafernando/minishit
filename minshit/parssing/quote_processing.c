@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_processing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:25:55 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/22 19:34:41 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/05/28 22:59:51 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built-ins/minishell.h"
+#include "../minishell.h"
 
 char	*extract_single_quote_content(char *input, int *i)
 {

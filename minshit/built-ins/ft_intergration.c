@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_intergration.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 20:19:42 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/23 20:09:47 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:29:32 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// wrong place to divide, first just make a matrix for command then inside that allocate
-// or just search the matrix for redirections nd do them first
-// output always the word after
-
-#include "minishell.h"
+#include "../minishell.h"
 
 void	save_redirections(t_info *info, t_token *token)
 {
@@ -24,21 +20,6 @@ void	save_redirections(t_info *info, t_token *token)
 	tmp = token;
 	while (tmp && tmp->type != 1)
 	{
-		// if ((tmp->type == 5 || tmp->type == 6) && ((ft_strcmp(tmp->content, "<") == 0
-		// 		|| ft_strcmp(tmp->content, ">") == 0
-		// 		|| ft_strcmp(tmp->content, ">>") == 0
-		// 		|| ft_strcmp(tmp->content, "<<") == 0)))
-		// 	{
-		// 		matrix = malloc(3 * sizeof(char*));
-		// 		if (!matrix)
-		// 			return ;
-		// 		matrix[2] = NULL;
-		// 		matrix[0] = ft_strjoin(";", tmp->content);
-		// 		matrix[1] = ft_strdup(tmp->next->content);
-		// 		info->exec[info->pos] = matrix;
-		// 		info->pos++;
-		// 		tmp = tmp->next;
-		// 	}
 		if (tmp->type == 2 || tmp->type == 3
 			|| tmp->type == 4 || tmp->type == 7)
 		{
@@ -56,42 +37,29 @@ void	save_redirections(t_info *info, t_token *token)
 	}
 }
 
-
-void	save_command(t_info *info, t_token **token)
+int	size_command(t_token **token)
 {
-	int		i;
-	int		j;
-	char	**matrix;
+	int i;
 	t_token	*tmp;
 
 	i = 0;
-	tmp = *token;
+	tmp = (*token);
 	while (tmp && tmp->type != 1)
 	{
-		if (tmp->type == 2 || tmp->type == 4
-			|| tmp->type == 3 || tmp->type == 7)
-			tmp = tmp->next->next;
-		// else if (tmp->type == 8 || tmp->type == 6)
-		// {
-		// 		i += 2;
-		// 		tmp = tmp->next;
-		// }
-		else
-		{
-			tmp = tmp->next;
+		if (tmp->type != 2 && tmp->type != 4 && tmp->type != 3 && tmp->type != 7)
 			i++;
-		}
+		if (tmp->type == 2 || tmp->type == 4 || tmp->type == 3 || tmp->type == 7)
+			tmp = tmp->next->next;
+		else
+			tmp = tmp->next;
 	}
-	save_redirections(info, (*token));
-	if (i == 0)
-	{
-		while ((*token) && (*token)->type != 1)
-			(*token) = (*token)->next;
-		return ;
-	}
-	matrix = malloc((i + 1) * sizeof(char *));
-	if (!matrix)
-		return ;
+	return (i);
+}
+
+void	copy_command(t_info *info, t_token **token, char ***matrix)
+{
+	int	j;
+
 	j = 0;
 	while ((*token) && (*token)->type != 1)
 	{
@@ -102,21 +70,35 @@ void	save_command(t_info *info, t_token **token)
 				|| ft_strcmp((*token)->content, ">") == 0
 				|| ft_strcmp((*token)->content, ">>") == 0
 				|| ft_strcmp((*token)->content, "<<") == 0)))
-				matrix[j] = ft_strjoin(";", (*token)->content);
-			// {
-			// 	matrix[j] = ft_strdup("$");
-			// 	j++;
-			// 	matrix[j] = ft_strdup((*token)->content);
-			// }
+				(*matrix)[j] = ft_strjoin(";", (*token)->content);
 			else
-				matrix[j] = ft_strdup((*token)->content);
+				(*matrix)[j] = ft_strdup((*token)->content);
 			j++;
 			(*token) = (*token)->next;
 		}
 		else
 			(*token) = (*token)->next->next;
 	}
-	matrix[j] = NULL;
+	(*matrix)[j] = NULL;
+}
+
+void	save_command(t_info *info, t_token **token)
+{
+	int		i;
+	char	**matrix;
+
+	i = size_command(token);
+	save_redirections(info, (*token));
+	if (i == 0)
+	{
+		while ((*token) && (*token)->type != 1)
+			(*token) = (*token)->next;
+		return ;
+	}
+	matrix = malloc((i + 1) * sizeof(char *));
+	if (!matrix)
+		return ;
+	copy_command(info, token, &matrix);
 	info->exec[info->pos] = matrix;
 	info->pos++;
 	return ;
@@ -144,34 +126,40 @@ void	ft_conditions(t_info *info, t_token **token)
 		save_other(info, token);
 }
 
+int	size_main_matrix(t_token *token)
+{
+	int		size;
+	t_token	*tmp;
+
+	size = 0;
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == 0 || tmp->type == 5 || tmp->type == 6 || tmp->type == 8)
+			size++;
+		if ((tmp->type == 2 || tmp->type == 3 || tmp->type == 4 || tmp->type == 7) &&
+			tmp->next != NULL)
+		{
+			size++;
+			tmp = tmp->next->next;
+			continue;
+		}
+		if (tmp->type == 1)
+			size++;
+		tmp = tmp->next;
+	}
+	return (size);
+}
+
 void	form_main(t_token *token, t_info *info)
 {
 	int		i;
 	int		flag;
 	int		size;
-	t_token	*tmp;
 	char	***matrix;
 
-	size = 0;
 	flag = 0;
-	tmp = token;
-	while(tmp)
-	{
-		if (tmp->type == 0 || tmp->type == 5 || tmp->type == 6 || tmp->type == 8)
-			size++;
-		while (tmp && tmp->type != 1)
-		{
-			if (tmp->type == 2 || tmp->type == 4
-				|| tmp->type == 3 || tmp->type == 7)
-				size++;
-			tmp = tmp->next;
-		}
-		if (tmp && tmp->type == 1)
-		{
-			size++;
-			tmp = tmp->next;
-		}
-	}
+	size = size_main_matrix(token);
 	matrix = malloc((size + 1) * sizeof(char**));
 	if (!matrix)
 		return ;

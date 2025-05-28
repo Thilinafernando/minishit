@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 19:55:30 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/22 20:09:48 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:00:14 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built-ins/minishell.h"
+#include "../minishell.h"
 
 t_token	*creat_token(char *content, t_token_type type)
 {

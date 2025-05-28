@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:32:25 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/22 19:36:21 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:00:04 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built-ins/minishell.h"
+#include "../minishell.h"
 
 t_token	*join_word_segment(char *segment, t_token *head,
 				t_token **current_word_token, t_token_type type)

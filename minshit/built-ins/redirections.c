@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:04:01 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:53:14 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:55:03 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// if open fails, estat to the right number
-
-#include "minishell.h"
+#include "../minishell.h"
 
 int	ft_input(char **exec, t_info *info)
 {
@@ -85,15 +83,17 @@ int	ft_append(char **exec, t_info *info)
 
 char	*heredoc_filename(void)
 {
-	char	*pid;
-	char	*filename;
-	char	*tmp;
+	static int	counter;
+	char		*number;
+	char		*filename;
+	char		*tmp;
 
-	pid = ft_itoa(getpid());
-	if (!pid)
+	counter = 0;
+	number = ft_itoa(counter++);
+	if (!number)
 		return (NULL);
-	tmp = ft_strjoin("/tmp/.heredoc_", pid);
-	free(pid);
+	tmp = ft_strjoin("/tmp/.heredoc_", number);
+	free(number);
 	if (!tmp)
 		return (NULL);
 	filename = ft_strjoin(tmp, ".tmp");
@@ -101,57 +101,63 @@ char	*heredoc_filename(void)
 	return (filename);
 }
 
+int	setting_stdin(int *std_in)
+{
+	(*std_in) = open("/dev/tty", O_RDONLY);
+	if ((*std_in) == -1)
+	{
+		write(2, "Minishell: cannot open /dev/tty\n", 32);
+		return (-1);
+	}
+	if (dup2((*std_in), STDIN_FILENO) == -1)
+	{
+		write(2, "Minishell: dup2 failed\n", 23);
+		close((*std_in));
+		return (-1);
+	}
+	close((*std_in));
+	return (0);
+}
 
+void	err_fd_heredoc(char *filename)
+{
+	write(2, "Minishell : ", 12);
+	write(2, filename, ft_strlen(filename));
+	write(2, ": ", 2);
+	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, "\n", 1);
+}
+
+void	readline_child(char **filename, t_info *info, int fd, char **str)
+{
+
+	free((*str));
+	free((*filename));
+	close(fd);
+	free_all(info);
+	if (signal_status == 130)
+		exit(130);
+	exit(0);
+}
 
 void	ft_heredoc_process(char **exec, t_info *info, char *filename)
 {
-	char	*str;
 	char	*dollar;
 	int		fd;
 	int		std_in;
 
-
 	dollar = NULL;
-	std_in = open("/dev/tty", O_RDONLY);
-	if (std_in == -1)
-	{
-		write(2, "Minishell: cannot open /dev/tty\n", 32);
+	if (setting_stdin(&std_in) == -1)
 		return (free(filename), exit(1));
-	}
-	if (dup2(std_in, STDIN_FILENO) == -1)
-	{
-		write(2, "Minishell: dup2 failed\n", 23);
-		close(std_in);
-		free(filename);
-		exit(1);
-	}
-	close(std_in);
 	fd = open(filename, O_CREAT| O_TRUNC | O_WRONLY, 0644);
 	if (fd == -1)
-	{
-		write(2, "Minishell : ", 12);
-		write(2, filename, ft_strlen(filename));
-		write(2, ": ", 2);
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(2, "\n", 1);
-		return (free(filename), exit(126));
-	}
+		return (err_fd_heredoc(filename), free(filename), exit(126));
 	while (1)
 	{
 		str = readline("> ");
 		if (!str || !exec[1] || ft_strcmp(str, exec[1]) == 0)
 		{
-			if (!str && signal_status != 130)
-			write(2, "Minishell: warning: here-document delimited by end-of-file (wanted ", 67);
-			write(2, exec[1], ft_strlen(exec[1]));
-			write(2, ")\n", 2);
-			free(str);
-			free(filename);
-			close(fd);
-			free_all(info);
-			if (signal_status == 130)
-				exit(130);
-			exit(0);
+			readline_child(&filename, info, &str);
 		}
 		dollar = expand_dollar1(str, info);
 		if (dollar)

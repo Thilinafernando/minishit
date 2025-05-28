@@ -3,46 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   testing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:36:36 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/19 23:56:40 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:02:48 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-#include <stdlib.h>
-
-t_token *ft_newnode(char *content, t_token_type type)
-{
-    t_token *node;
-
-    node = malloc(sizeof(t_token));
-    if (!node)
-        return (NULL);
-    node->content = content; // Assume content is already duplicated if needed
-    node->type = type;
-    node->next = NULL;
-    return (node);
-}
-
-void ft_listadd_back(t_token **lst, t_token *new)
-{
-    t_token *tmp;
-
-    if (!lst || !new)
-        return;
-    if (!*lst)
-    {
-        *lst = new;
-        return;
-    }
-    tmp = *lst;
-    while (tmp->next)
-        tmp = tmp->next;
-    tmp->next = new;
-}
+#include "../minishell.h"
 
 char	*ft_strncpy(char *dest, char *src, unsigned int n)
 {
@@ -134,4 +102,13 @@ void	ft_remove(char ***matrix)
 		}
 		i++;
 	}
+}
+
+void	err_cd(char *arg)
+{
+	write(2, "Minishell: cd: ", 15);
+	write(2, arg, ft_strlen(arg));
+	write(2, ": ", 2);
+	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, "\n", 1);
 }

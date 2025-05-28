@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:37:00 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:51:11 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:02:56 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	in_out_1(int pipefd[2])
 {

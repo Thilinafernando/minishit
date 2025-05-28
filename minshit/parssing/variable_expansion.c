@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:29:08 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/22 20:07:50 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:00:18 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built-ins/minishell.h"
+#include "../minishell.h"
 
 t_token	*handle_env_variable(char *input, int *i,
 	t_token *head, t_parse_ctx *ctx)

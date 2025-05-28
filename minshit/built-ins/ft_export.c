@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 01:47:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:58:39 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:40:58 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-//  more args
+#include "../minishell.h"
 
 int	verify(char	*str)
 {
@@ -116,38 +114,46 @@ int	append(char **matrix, char *args)
 	return (flag);
 }
 
-char	**matrix_join(t_info *info, char **args, int size)
+void	process_join(t_info *info, char **args, char ***new)
 {
-	int		i;
-	int		x;
 	int		j;
-	char	**new;
+	int		i;
 
-	i = 0;
-	x = 0;
-	new = malloc((size + 1) * sizeof(char *));
-	while (x <= size)
-	{
-		new[x] = NULL;
-		x++;
-	}
 	j = 0;
+	i = 0;
 	while(info->tmp[j])
 	{
-		new[i] = ft_strdup(info->tmp[j]);
+		(*new)[i] = ft_strdup(info->tmp[j]);
 		i++;
 		j++;
 	}
 	j = 0;
 	while(args[j])
 	{
-		if (append(new, args[j]) != 1)
+		if (append((*new), args[j]) != 1)
 		{
-			new[i] = ft_strdup(args[j]);
+			(*new)[i] = ft_strdup(args[j]);
 			i++;
 		}
 		j++;
 	}
+}
+
+char	**matrix_join(t_info *info, char **args, int size)
+{
+	int		x;
+	char	**new;
+
+	x = 0;
+	new = malloc((size + 1) * sizeof(char *));
+	if (!new)
+		return (NULL);
+	while (x <= size)
+	{
+		new[x] = NULL;
+		x++;
+	}
+	process_join(info, args, &new);
 	free_mat(info->tmp);
 	new[size] = NULL;
 	return (new);
@@ -201,11 +207,29 @@ void	sorting(t_info *info)
 	}
 }
 
+void	printing_process(t_info *info, int *i)
+{
+	int	j;
+	int	flag;
+
+	flag = 0;
+	j = -1;
+	while (info->tmp[(*i)][++j])
+	{
+		write(1, &info->tmp[(*i)][j], 1);
+		if (info->tmp[(*i)][j] == '=' && flag == 0)
+		{
+			write(1, "\"", 1);
+			flag = 1;
+		}
+		if (!info->tmp[(*i)][j + 1] && flag != 0)
+			write(1, "\"", 1);
+	}
+}
+
 void	print_export(t_info *info)
 {
 	int	i;
-	int	j;
-	int	flag;
 
 	i = -1;
 	sorting(info);
@@ -213,42 +237,18 @@ void	print_export(t_info *info)
 	{
 		if (ft_strncmp(info->tmp[i], "_=", 2) == 0)
 			continue;
-		flag = 0;
-		j = -1;
 		write(1, "declare -x ", 11);
-		while (info->tmp[i][++j])
-		{
-			write(1, &info->tmp[i][j], 1);
-			if (info->tmp[i][j] == '=' && flag == 0)
-			{
-				write(1, "\"", 1);
-				flag = 1;
-			}
-			if (!info->tmp[i][j + 1] && flag != 0)
-				write(1, "\"", 1);
-		}
+		printing_process(info, &i);
 		write(1, "\n", 1);
 	}
 	free_mat(info->tmp);
 }
 
-
-void	ft_export(t_info *info, char **args)
+void	verify_loop(char **args, t_info *info,int *count)
 {
-	int	i;
-	int	x;
-	int	j;
-	int	count;
-	char	**tmp;
+	int i;
 
 	i = 1;
-	x = 0;
-	count = 0;
-	if (!args[i])
-	{
-		print_export(info);
-		return (estat(0, info));
-	}
 	while (args[i])
 	{
 		if((verify(args[i]) != 0))
@@ -259,27 +259,51 @@ void	ft_export(t_info *info, char **args)
 			estat(1, info);
 		}
 		else
-			count++;
+			(*count)++;
 		i++;
 	}
-	tmp = malloc((count + 1) * sizeof(char *));
-	while (x <= count)
-	{
-		tmp[x] = NULL;
-		x++;
-	}
+}
+
+void	copy_loop(char **args, t_info *info, char ***tmp)
+{
+	int	j;
+	int	i;
+
 	i = 1;
 	j = 0;
 	while (args[i])
 	{
 		if((verify(args[i]) == 0))
 		{
-			tmp[j] = ft_strdup(args[i]);
+			(*tmp)[j] = ft_strdup(args[i]);
 			j++;
 		}
 		i++;
 	}
-	tmp[j] = NULL;
+	(*tmp)[j] = NULL;
+}
+
+void	ft_export(t_info *info, char **args)
+{
+	int	x;
+	int	count;
+	char	**tmp;
+
+	x = 0;
+	count = 0;
+	if (!args[1])
+	{
+		print_export(info);
+		return (estat(0, info));
+	}
+	verify_loop(args, info, &count);
+	tmp = malloc((count + 1) * sizeof(char *));
+	while (x <= count)
+	{
+		tmp[x] = NULL;
+		x++;
+	}
+	copy_loop(args, info, &tmp);
 	matrix_tmp(info);
 	free_mat(info->env);
 	info->size += count;
@@ -287,41 +311,3 @@ void	ft_export(t_info *info, char **args)
 	free_mat(tmp);
 	return (estat(info->exit_status, info));
 }
-
-
-/* int	main(int ac, char **av, char **env)
-{
-	t_info	info;
-	char	*args[4];
-	// int	i;
-
-	// i = 0;
-	(void)ac;
-	(void)av;
-	args[0] = NULL;
-	args[1] = "1fa== 2";
-	args[2] = "fic=1";
-	args[3] = NULL;
-	info.env = NULL;
-	form_env(env, &info);
-	ft_export(&info, args);
-	// while (info.env[i])
-	// {
-	// 	printf("%s\n", info.env[i]);
-	// 	i++;
-	// }
-	free_mat(info.env);
-	// printf("\nBEFORE\n\n\nAFTER\n");
-	// i = 0;
-	// while (info.env[i])
-	// {
-	// 	printf("%s\n", info.env[i]);
-	// 	fflush(stdout);
-	// 	i++;
-	// }
-} */
-//first character has to be a-z
-// later it can be a combo of characters numerals and under4score
-// "" and '' allowed any where
-// try to save env in a ***matrix
-// variables that are correct will work

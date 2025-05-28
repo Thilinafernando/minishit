@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 01:31:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:17:46 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:01:09 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free3(char ***matrix)
 {
@@ -37,7 +37,6 @@ void	free_all(t_info *info)
 	info->fd_out_child = -420;
 	free3(info->exec);
 	free_mat(info->env);
-	// free(info->oldpwd);
 	close_fd(info->fd_in_out);
 	close(0);
 	close(1);
@@ -55,8 +54,4 @@ void	padre(t_info *info)
 	free3(info->exec);
 	free_mat(info->env);
 	close_fd(info->fd_in_out);
-	// close(0);
-	// close(1);
-	// close(2);
 }
-

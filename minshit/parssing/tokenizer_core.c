@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_core.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:16:54 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/23 17:12:11 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:00:07 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built-ins/minishell.h"
+#include "../minishell.h"
 
 t_token	*tokenize_input(char *input, t_info *info)
 {

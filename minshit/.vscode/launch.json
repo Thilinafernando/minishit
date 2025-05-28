@@ -5,7 +5,7 @@
 		"name": "(gdb) Launch",
 		"type": "cppdbg",
 		"request": "launch",
-		"program": "/nfs/homes/tkurukul/Desktop/minishit/minshit/minishell",
+		"program": "/home/tkurukul/Desktop/minishit/minshit/minishell",
 		"args": [],
 		"stopAtEntry": false,
 		"cwd": "${fileDirname}",

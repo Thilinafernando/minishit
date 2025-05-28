@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:47:35 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/16 17:36:33 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:01:12 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// go inside double quotes and single quotes
-
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*setfull(char *gg, char *str, int size)
 {

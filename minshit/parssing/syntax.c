@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilmahjou <ilmahjou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:59:37 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/22 20:07:12 by ilmahjou         ###   ########.fr       */
+/*   Updated: 2025/05/28 22:59:55 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built-ins/minishell.h"
+#include "../minishell.h"
 
 int	validate_syntax(t_token *tokens, t_info *info, t_token *prev)
 {
