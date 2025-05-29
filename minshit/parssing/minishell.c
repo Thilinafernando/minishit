@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:10:33 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/28 22:59:45 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:21:41 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int main(int ac, char **av, char **env)
 		info.fd_out_child = -420;
 		info.exec = NULL;
 		info.tmp = NULL;
+		info.dollar = NULL;
 		// info.oldpwd = NULL;
 		//signal(SIGINT, ctrl_c);
 		// signal(SIGQUIT, estat);

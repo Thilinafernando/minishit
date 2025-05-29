@@ -16,16 +16,23 @@ GNL_SRC = get_next_line.c get_next_line_utils.c
 
 EXECDIR = execution/
 EXEC = execution/exec_cdion_pt2.c exec_conditions.c exec_child.c exec_parent.c exec_pt2.c ft_execution.c \
+		ft_intergration.c ft_intergration2.c
+
+REDDIR = redirections/
+RED = redirections/redirections.c heredoc.c heredoc_utils.c heredoc_utils2.c ftt_expansion.c\
+
+UTILSDIR = Utils/
+UTILS = Utils/refresh_redirections.c ft_signal.c utils_pipe.c ft_pipe.c free.c \
+		testing_utils.c dollar.c export_utils.c export_utils2.c unset_utils.c\
 
 SRCDIR = built-ins/
-SRC = built-ins/ft_pwd.c ft_env.c ft_cd.c ft_export.c ft_unset.c ft_echo.c ft_intergration.c testing_utils.c dollar.c \
-		ft_signal.c redirections.c utils_pipe.c ft_pipe.c free.c ft_exit.c refresh_redirections.c \
-		ftt_expansion.c
+SRC = built-ins/ft_pwd.c ft_env.c ft_cd.c ft_export.c ft_unset.c ft_echo.c \
+		ft_exit.c \
 
 PARSDIR = parssing/
 PRC = parssing/quote_processing.c syntax.c token_handlers.c token_utils.c tokenizer_core.c utils.c variable_expansion.c minishell.c
 
-ALL_SRC = $(SRC) $(PRC) $(EXEC)
+ALL_SRC = $(SRC) $(PRC) $(EXEC) $(UTILS) $(RED)
 
 OBJ_DIR = obj
 
@@ -56,6 +63,16 @@ $(OBJ_DIR)/%.o: $(PARSDIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
 $(OBJ_DIR)/%.o: $(EXECDIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "Compiling $< ..."
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+
+$(OBJ_DIR)/%.o: $(REDDIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "Compiling $< ..."
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+
+$(OBJ_DIR)/%.o: $(UTILSDIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "Compiling $< ..."
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)

@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 22:02:24 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/28 23:00:25 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:19:19 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	is_builtout(char ***matrix, t_info *info)
 	if (is_builtin(matrix[mat]) == 1)
 	{
 		mat = builtout_re(matrix, info);
+		if (mat == -2)
+			return (-2);
 		ft_remove(matrix);
 		i = builtout_process(matrix, info, mat);
 	}

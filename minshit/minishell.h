@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:09:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/28 23:04:13 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:44:40 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_info {
 	int		mat;
 	int		count;
 	int		flag;
+	char	*dollar;
 } t_info;
 
 typedef enum {
@@ -100,24 +101,48 @@ void	ft_unset(t_info *info, char **args);
 void	ft_export(t_info *info, char **args);
 void	ft_env(char **matrix, t_info *info);
 void	ft_cd(char **args, t_info *info);
-int	ft_echo(char **args, t_info *info);
+int		ft_echo(char **args, t_info *info);
 void	ft_exit(char **args, t_info *info);
 void	ft_pipe_exit(char **args, t_info *info);
 
+// built-ins utils
+int		verify(char	*str);
+int		append(char **matrix, char *args);
+void	process_join(t_info *info, char **args, char ***new);
+char	**matrix_join(t_info *info, char **args, int size);
+void	swap(char **a, char **b);
+void	sorting(t_info *info);
+void	err_unset(char *str);
+int		verify_unset(char *str, t_info *info);
+int		calcu(char **args, t_info *info);
+int		dups(char **args);
+int		yes_unset(t_info *info, char **args, int i);
+void	save_redirections(t_info *info, t_token *token);
+int		size_command(t_token **token);
+void	copy_command(t_token **token, char ***matrix);
+
+
+
 // redirections
-int	ft_input(char **exec, t_info *info);
-int	ft_output(char **exec, t_info *info);
-int	ft_append(char **exec, t_info *info);
-int	ft_heredoc(char **exec, t_info *info);
+int		ft_input(char **exec, t_info *info);
+int		ft_output(char **exec, t_info *info);
+int		ft_append(char **exec, t_info *info);
+int		ft_heredoc(char **exec, t_info *info);
 void	ctrl_c_here(int sig);
 
+// Heredoc utils
+char	*heredoc_filename(void);
+int		setting_stdin(int *std_in);
+void	err_fd_heredoc(char **filename);
+void	err_heredoc_null(char **exec, char *str);
+void	err_heredoc_pfd(t_info *info);
+void	write_dollar(char **dollar, int fd);
+void	heredoc_printing_fd(int fd, char *str);
+int		parent_signal_handler(int *status, t_info *info);
+
 // dollar
-/* char	*dollarfull(char *str, t_info *info);
-int	arg_execve(char ***command, t_info *info); */
 char	*mdollar(char *str, t_info *info);
 char	*expand_dollar1(char *line, t_info *info);
-
-
 
 // pipe and proccess
 void	ft_execution(t_info *info);
@@ -174,9 +199,6 @@ int		if_out(char ***exec, int mat);
 int		if_in(char ***exec, int mat);
 void	ft_remove(char ***matrix);
 
-
-
-
 // free
 void	free3(char ***matrix);
 void  free_all(t_info *info);
@@ -185,40 +207,44 @@ void	padre(t_info *info);
 //parssing
 /*quote_processing.c*/
 char	*extract_single_quote_content(char *input, int *i);
-char *extract_double_quote_content(char *input, int *i, t_info *info);
+char	*extract_double_quote_content(char *input, int *i, t_info *info);
 t_token	*process_single_quote(t_parse_ctx *ctx);
 t_token	*process_double_quote(t_parse_ctx *ctx);
-char *handle_quote_end(char *input, int *i, int content_start, char *full_segment);
+char	*handle_quote_end(char *input, int *i, int content_start, char *full_segment);
+
 /*syntax.c*/
-int	validate_syntax(t_token *tokens, t_info *info, t_token *prev);
-char *token_type_to_string(t_token_type token_type);
+int		validate_syntax(t_token *tokens, t_info *info, t_token *prev);
+char	*token_type_to_string(t_token_type token_type);
 t_token	*handle_special_chars(char *input, int *i, t_token *head, t_parse_ctx *full_ctx);
 t_token	*handle_pipe(int *i, t_token *head, t_token *current);
 t_token	*handle_redirection(char *input, int *i, t_token *head, t_token *current);
 t_token *handle_redirection_append(char *input, int *i);
 t_token	*process_pipe(t_parse_ctx *ctx);
+
 /*token_utils.c*/
 t_token	*join_word_segment(char *segment, t_token *head, t_token **current_word_token, t_token_type type);
 t_token	*add_new_token_to_list(char *segment, t_token *head, t_token **current_word_token, t_token_type type);
 t_token	*append_to_existing_token(char *segment, t_token *head, t_token **current_word_token);
 char	*join_and_free(char *s1, char *s2);
 t_token	*process_redirection(t_parse_ctx *ctx);
+
 /*tokenizer_core.c*/
 t_token	*tokenize_input(char *input, t_info *info);
-int	parse_tokens_loop(char *input, int *i, t_info *info, t_token **head);
-int	handle_word_segment(char *input, int *i, t_token **head, t_token **current_word_token);
-char *extract_word_segment(char *input, int *i);
+int		parse_tokens_loop(char *input, int *i, t_info *info, t_token **head);
+int		handle_word_segment(char *input, int *i, t_token **head, t_token **current_word_token);
+char	*extract_word_segment(char *input, int *i);
 void	debug_print_tokens(t_token *tokens);
+
 /*utils.c*/
-t_token *creat_token(char *content, t_token_type type);
-t_token *free_tokens(t_token *head);
+t_token	*creat_token(char *content, t_token_type type);
+t_token	*free_tokens(t_token *head);
 t_token	*get_last_token(t_token *head);
+
 /*variable_expansion.c*/
 t_token	*handle_env_variable(char *input, int *i, t_token *head, t_parse_ctx *ctx);
 char	*get_named_var_value(char *input, int *i, t_info *info);
 char	*process_named_variable(char *input, int *i, t_info *info);
-int	process_variable(char *input, int *i, t_info *info, char **full_segment);
-int	append_text_segment(char *input, int *i, int content_start, char **full_segment);
-
+int		process_variable(char *input, int *i, t_info *info, char **full_segment);
+int		append_text_segment(char *input, int *i, int content_start, char **full_segment);
 
 #endif

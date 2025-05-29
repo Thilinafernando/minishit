@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 22:13:33 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/28 23:01:23 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:35:33 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	checks(char **args, int i, int flag)
 {
-	if ((ft_strncmp(args[i], "-n", 2) != 0))
+	if ((ft_strncmp(args[i], "-n", 2) != 0) && args[i][0] == '\0')
+		return (flag);
+	else if ((ft_strncmp(args[i], "-n", 2) != 0))
 	{
 		write(1, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
@@ -41,7 +43,7 @@ int	ft_echo(char **args, t_info *info)
 		return (write(1, "\n", 1), 0);
 	while (args[i])
 	{
-		if (ft_strncmp(args[1], "-n", 2) != 0 && i == 1)
+		if (ft_strncmp(args[1], "-n", 2) != 0 && i == 1 && args[1][0])
 		{
 			write(1, args[i], ft_strlen(args[i]));
 			if (args[i + 1])
