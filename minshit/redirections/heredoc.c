@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:39:42 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 18:45:23 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:02:49 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_heredoc(char **exec, t_info *info)
 
 	filename = heredoc_filename();
 	if (!filename)
-		return (write(2, "Minishell: failed heredoc filename\n", 45), -1);
+		return (write(2, "Minishell: failed heredoc filename\n", 35), -1);
 	info->heredoc = filename;
 	pid = fork();
 	if (pid == -1)

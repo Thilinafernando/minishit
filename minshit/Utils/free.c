@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 01:31:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/28 23:01:09 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:13:05 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	free_all(t_info *info)
 	free3(info->exec);
 	free_mat(info->env);
 	close_fd(info->fd_in_out);
+	free(info->path);
 	close(0);
 	close(1);
 	close(2);
@@ -54,4 +55,5 @@ void	padre(t_info *info)
 	free3(info->exec);
 	free_mat(info->env);
 	close_fd(info->fd_in_out);
+	free(info->path);
 }

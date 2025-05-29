@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:10:33 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/29 22:30:15 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:06:26 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int main(int ac, char **av, char **env)
 		free(line);  // Free the line after processing
 	}
 	clear_history();
+	free(info.path);
 	free_mat(info.env);
 	close (1);
 	close (2);

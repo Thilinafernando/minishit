@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:09:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/29 22:29:32 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:01:11 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <stdlib.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 # include <errno.h>
 # include <unistd.h>
 #include <dirent.h>
@@ -122,8 +123,6 @@ void	save_redirections(t_info *info, t_token *token);
 int		size_command(t_token **token);
 void	copy_command(t_token **token, char ***matrix);
 
-
-
 // redirections
 int		ft_input(char **exec, t_info *info);
 int		ft_output(char **exec, t_info *info);
@@ -152,7 +151,7 @@ void	failure(int fd[2], t_info *info);
 void	failure_command(int fd[2], char **str, t_info *info);
 char	*abs_path(char *command, t_info *info);
 char	*build_full(char *path, char *command);
-char	**find_path(char **envp);
+char	**find_path(char *str);
 int		is_directory(const char *path);
 int		builtout_re(char ***matrix, t_info *info);
 int		is_builtin(char **matrix);
@@ -199,6 +198,8 @@ void	ft_refresh_fd(t_info *info);
 int		if_out(char ***exec, int mat);
 int		if_in(char ***exec, int mat);
 void	ft_remove(char ***matrix);
+int		is_val(const char *path, char *str);
+char	*save_paath(char **envp);
 
 // free
 void	free3(char ***matrix);

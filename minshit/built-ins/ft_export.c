@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 01:47:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 19:51:33 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:54:45 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_export(t_info *info, char **args)
 	tmp = malloc((count + 1) * sizeof(char *));
 	if (!tmp)
 		return ;
-	fill_null(tmp, count);
+	fill_null(&tmp, count);
 	copy_loop(args, &tmp);
 	matrix_tmp(info);
 	free_mat(info->env);

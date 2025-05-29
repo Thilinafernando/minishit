@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:09:23 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 19:53:13 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:01:47 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ int	exisit(char **matrix, char *arg)
 {
 	int	i;
 	int	len;
-	int	flag;
 
 	i = 0;
-	flag = 0;
 	len = 0;
 	while (arg[len] && arg[len] != '=')
 		len++;

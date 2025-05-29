@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 20:19:42 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 18:47:06 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:58:45 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,9 @@ int	size_main_matrix(t_token *token)
 void	form_main(t_token *token, t_info *info)
 {
 	int		i;
-	int		flag;
 	int		size;
 	char	***matrix;
 
-	flag = 0;
 	size = size_main_matrix(token);
 	matrix = malloc((size + 1) * sizeof(char **));
 	if (!matrix)
