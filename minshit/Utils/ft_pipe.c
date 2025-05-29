@@ -6,29 +6,16 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:52:49 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/28 23:23:51 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:32:15 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**find_path(char **envp)
+char	**find_path(char *str)
 {
-	int		i;
-	char	*str;
 	char	**matrix;
 
-	str = NULL;
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			str = (envp[i] + 5);
-			break ;
-		}
-		i++;
-	}
 	if (!str)
 		return (NULL);
 	matrix = ft_split(str, ':');
@@ -64,22 +51,46 @@ int	is_directory(const char *path)
 	return (0);
 }
 
+static int	conditions(char *command)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strchr(command, '/'))
+	{
+		if (access(command, X_OK) == 0)
+			return (1);
+		else
+		{
+			if (is_directory(command) == 0)
+			{
+				write(2, "Minishell: ", 11);
+				write(2, command, ft_strlen(command));
+				write(2, ": No such directory\n", 20);
+			}
+			return (-1);
+		}
+	}
+	return (0);
+}
+
 char	*abs_path(char *command, t_info *info)
 {
-	int		i;
+	int	i;
 	char	**matrix;
 	char	*str;
 
-	i = 0;
-	matrix = find_path(info->env);
+	i = conditions(command);
+	if (i == -1)
+		return (ft_strdup("GG"));
+	else if (i == 1)
+		return (ft_strdup(command));
+	matrix = find_path(info->path);
 	if (!matrix)
 		return (NULL);
 	while (matrix[i])
 	{
-		if (i == 0)
-			str = ft_strdup(command);
-		else
-			str = build_full(matrix[i], command);
+		str = build_full(matrix[i], command);
 		if (access(str, X_OK) == 0)
 			return (free_mat(matrix), str);
 		i++;

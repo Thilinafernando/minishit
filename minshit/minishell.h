@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:09:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/29 18:44:40 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:29:32 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_info {
 	int		count;
 	int		flag;
 	char	*dollar;
+	char	*path;
 } t_info;
 
 typedef enum {

@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:29:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/28 23:00:50 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:47:32 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	ft_execution(t_info *info)
 	init_exectution(&cpipe, info);
 	while (i < info->count)
 	{
+		if (info->exec[0][0][0] == '\0')
+			return ;
 		f = execution_half(info, &cpipe, &i);
 		if (f == -1)
 			break ;

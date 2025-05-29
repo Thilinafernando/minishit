@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 14:48:21 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 18:25:28 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:43:28 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	proccess(t_info *info, char **args)
 
 void	ft_unset(t_info *info, char **args)
 {
-	if (!args[1])
+	if (!args[1] || args[1][0] == '\0')
 		return (estat(0, info));
 	matrix_tmp(info);
 	free_mat(info->env);

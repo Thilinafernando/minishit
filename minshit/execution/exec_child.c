@@ -6,31 +6,49 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:54:04 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 19:22:50 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:42:06 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	one_exec(char **command, t_info *info, int fd[2])
+void	one_exec_cond(char **command, t_info *info, int fd[2], char **str)
 {
-	char	*str;
-
-	str = NULL;
-	str = abs_path(command[0], info);
-	if (is_directory(str) == 1)
+	if (ft_strcmp("GG", str) == 0)
 	{
-		free(str);
+		free((*str));
+		close_fd(fd);
+		free_all(info);
+		exit(127);
+	}
+	if (is_directory((*str)) == 1 || is_val((*str), command[0]) == -1)
+	{
+		free((*str));
 		close_fd(fd);
 		free_all(info);
 		exit(126);
 	}
+}
+
+void	one_exec(char **command, t_info *info, int fd[2])
+{
+	char	*str;
+
+	if (is_directory(command[0]) == 1)
+	{
+		close_fd(fd);
+		free_all(info);
+		exit(126);
+	}
+	str = NULL;
+	str = abs_path(command[0], info);
 	if (!str)
 	{
 		failure_command(fd, command, info);
 		free_all(info);
 		exit (info->exit_status);
 	}
+	one_exec_cond(command, info, fd, &str);
 	execve(str, command, info->env);
 	failure(fd, info);
 	free_all(info);

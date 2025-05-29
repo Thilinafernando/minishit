@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:10:33 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/29 17:21:41 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:30:15 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int main(int ac, char **av, char **env)
 		return (1);
 	}
 	form_env(env, &info);
+	info.path = save_paath(info.env);
 	using_history();
 	info.exit_status = 0;
 	while (1)
