@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:09:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/30 19:03:57 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:30:13 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	failure_command(int fd[2], char **str, t_info *info);
 char	*abs_path(char *command, t_info *info);
 char	*build_full(char *path, char *command);
 char	**find_path(char **envp);
-int		cd_home(t_info *info, char **home);
+void	cd_home(t_info *info, char **home);
 int		is_directory(const char *path);
 int		builtout_re(char ***matrix, t_info *info);
 int		is_builtin(char **matrix);
@@ -252,7 +252,6 @@ int		parse_tokens_loop(char *input, int *i, t_info *info, t_token **head);
 int		handle_word_segment(char *input, int *i, t_token **head,
 			t_token **current_word_token);
 char	*extract_word_segment(char *input, int *i);
-void	debug_print_tokens(t_token *tokens);
 
 /*utils.c*/
 t_token	*creat_token(char *content, t_token_type type);

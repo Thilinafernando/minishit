@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:09:23 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 23:01:47 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:59:10 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,7 @@ int	append(char **matrix, char *args)
 	if (pos != -1)
 	{
 		if ((verify_equal(args) == -1) && (verify_equal(matrix[pos]) == 0))
-		{
-			free(matrix[pos]);
-			matrix[pos] = ft_strjoin(args, "=");
-		}
+			flag = 1;
 		else
 		{
 			free(matrix[pos]);

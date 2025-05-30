@@ -6,20 +6,21 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 01:31:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 18:20:28 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:29:12 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	cd_home(t_info *info, char **home)
+void	cd_home(t_info *info, char **home)
 {
 	if (!(*home))
-		return (write(2, "Minishell: Home not set\n", 24), 0);
+		return (write(2, "Minishell: Home not set\n", 24),
+			estat(1, info));
 	update_oldpwd(&info->env, info);
 	chdir((const char *)(*home));
 	update_pwd(&info->env, info);
-	return (free(*home), estat(0, info), 0);
+	return (free(*home), estat(0, info));
 }
 
 void	free3(char ***matrix)

@@ -99,7 +99,7 @@ fclean: clean
 re: fclean all
 
 vall: all clean
-		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --suppressions=readline.supp ./minishell
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --suppressions=/home/tkurukul/Desktop/minishit/minshit/readline.supp ./minishell
 
 .PHONY: all bonus clean fclean re
 

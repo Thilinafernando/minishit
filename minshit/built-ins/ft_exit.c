@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 18:23:50 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 18:24:23 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:42:25 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,9 @@ int	is_num(char *str)
 
 int	exit_arg_checks(char **args, t_info *info)
 {
-	int	i;
-
-	i = 0;
-	while (args[++i])
+	if (args[1])
 	{
-		if (is_num(args[i]) == -1)
+		if (is_num(args[1]) == -1)
 		{
 			write(2, "Minishell: exit: ", 17);
 			write(2, args[1], ft_strlen(args[1]));

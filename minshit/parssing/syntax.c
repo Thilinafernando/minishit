@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:59:37 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/30 19:11:44 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:34:24 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	validate_syntax(t_token *tokens, t_info *info, t_token *prev)
 		{
 			if (!prev || !tokens->next || tokens->next->type == TOKEN_PIPE)
 			{
-				ft_printf(2, "Minishell: syntax error near unexpected token `%s'\n",
+				ft_printf(2, "Minishell: syntax error: unexpected token `%s'\n",
 					token_type_to_string(TOKEN_PIPE));
 				return (estat(2, info), 0);
 			}
@@ -30,7 +30,7 @@ int	validate_syntax(t_token *tokens, t_info *info, t_token *prev)
 		{
 			if (!tokens->next || tokens->next->type != TOKEN_WORD)
 			{
-				ft_printf(2, "Minishell: syntax error near unexpected token `%s'\n",
+				ft_printf(2, "Minishell: syntax error: unexpected token `%s'\n",
 					token_type_to_string(tokens->type));
 				return (estat(2, info), 0);
 			}

@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:46:45 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 19:10:15 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:28:50 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	update_oldpwd(char ***matrix, t_info *info)
 			return (0);
 		}
 	}
+	free(oldpwd);
 	return (0);
 }
 
@@ -105,7 +106,7 @@ void	ft_cd(char **args, t_info *info)
 			free(home), estat(1, info));
 	if (args[1] == NULL || args[1][0] == '\0'
 			|| (ft_strcmp(args[1], "~") == 0))
-		cd_home(info, &home);
+		return (cd_home(info, &home));
 	else if (args[1])
 	{
 		update_oldpwd(&info->env, info);
@@ -114,5 +115,7 @@ void	ft_cd(char **args, t_info *info)
 		update_pwd(&info->env, info);
 		return (free(home), estat(0, info));
 	}
-	return (free(home), estat(1, info));
+	if (home)
+		free(home);
+	return (estat(1, info));
 }
