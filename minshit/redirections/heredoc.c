@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:39:42 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 15:57:21 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:52:07 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	readline_child(char **filename, t_info *info, int *fd, char **str)
 	free((*str));
 	free((*filename));
 	close((*fd));
+	close_fd(info->cpipe);
 	free_all(info);
 	if (g_signal_status == 130)
 		exit(130);

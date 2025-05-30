@@ -6,16 +6,29 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:52:49 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 15:38:44 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:02:56 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**find_path(char *str)
+char	**find_path(char **envp)
 {
+	int		i;
+	char	*str;
 	char	**matrix;
 
+	str = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			str = (envp[i] + 5);
+			break ;
+		}
+		i++;
+	}
 	if (!str)
 		return (NULL);
 	matrix = ft_split(str, ':');
@@ -82,7 +95,7 @@ char	*abs_path(char *command, t_info *info)
 		return (ft_strdup("GG"));
 	else if (i == 1)
 		return (ft_strdup(command));
-	matrix = find_path(info->path);
+	matrix = find_path(info->env);
 	if (!matrix)
 		return (NULL);
 	while (matrix[i])

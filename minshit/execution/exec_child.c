@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:54:04 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 23:11:46 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:49:35 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	child_pt2(t_info *info)
 	}
 }
 
-void	child_pt1(t_info *info, int *i, int (*cpipe)[2])
+void	child_pt1(t_info *info, int *i)
 {
 	if ((*i) != 0 && info->prevpipe != -42)
 	{
@@ -85,19 +85,19 @@ void	child_pt1(t_info *info, int *i, int (*cpipe)[2])
 	}
 	if ((*i) != (info->count - 1))
 	{
-		close((*cpipe)[0]);
-		if (dup2((*cpipe)[1], 1) == -1)
+		close(info->cpipe[0]);
+		if (dup2(info->cpipe[1], 1) == -1)
 			return (write(2, "Minishell: error dup2\n", 22)
 				, free_all(info), exit(1));
-		close((*cpipe)[1]);
+		close(info->cpipe[1]);
 	}
 }
 
-void	child_block(t_info *info, int *i, int (*cpipe)[2])
+void	child_block(t_info *info, int *i)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	child_pt1(info, i, cpipe);
+	child_pt1(info, i);
 	child_pt2(info);
 	if (info->fd_out_child != -420)
 	{
@@ -116,6 +116,6 @@ void	child_block(t_info *info, int *i, int (*cpipe)[2])
 	{
 		close(info->fd_in_out[0]);
 		close(info->fd_in_out[1]);
-		one_exec(info->exec[info->mat], info, (*cpipe));
+		one_exec(info->exec[info->mat], info, info->cpipe);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:09:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/30 16:33:47 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:03:57 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_info {
 	char	**tmp;
 	int		size;
 	int		fd_in_out[2];
+	int		cpipe[2];
 	int		exit_status;
 	int		fd_in_child;
 	int		fd_out_child;
@@ -56,11 +57,10 @@ typedef struct s_info {
 	int		count;
 	int		flag;
 	char	*dollar;
-	char	*path;
 	char	*line;
 }	t_info;
 
-typedef enum {
+typedef enum e_token_type {
 	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_REDIR_IN,
@@ -150,7 +150,8 @@ void	failure(int fd[2], t_info *info);
 void	failure_command(int fd[2], char **str, t_info *info);
 char	*abs_path(char *command, t_info *info);
 char	*build_full(char *path, char *command);
-char	**find_path(char *str);
+char	**find_path(char **envp);
+int		cd_home(t_info *info, char **home);
 int		is_directory(const char *path);
 int		builtout_re(char ***matrix, t_info *info);
 int		is_builtin(char **matrix);
@@ -160,22 +161,22 @@ void	block_only_rd(t_info *info);
 void	block_rd(t_info *info);
 void	one_exec(char **command, t_info *info, int fd[2]);
 void	child_pt2(t_info *info);
-void	child_pt1(t_info *info, int *i, int (*cpipe)[2]);
-void	child_block(t_info *info, int *i, int (*cpipe)[2]);
+void	child_pt1(t_info *info, int *i);
+void	child_block(t_info *info, int *i);
 int		ft_redirections(char **matrix, t_info *info);
 int		is_redirection(char **matrix);
 int		is_builtin(char **matrix);
 void	exec_builtin(char **matrix, t_info *info);
 int		builtout_process(char ***matrix, t_info *info, int mat);
-void	parent_block(t_info *info, int *i, pid_t pid, int (*cpipe)[2]);
+void	parent_block(t_info *info, int *i, pid_t pid);
 void	fail_wait(t_info *info);
 void	wait_block(t_info *info);
 void	process_count_blocks(char ***exec, int *i, int *count, int *cmd_rd);
 int		count_exec_blocks(char ***exec);
-void	init_exectution(int (*cpipe)[2], t_info *info);
-void	fork_block(t_info *info, pid_t *pid, int (*cpipe)[2], int *i);
+void	init_exectution(t_info *info);
+void	fork_block(t_info *info, pid_t *pid, int *i);
 void	final_block(t_info *info);
-int		execution_half(t_info *info, int (*cpipe)[2], int *i);
+int		execution_half(t_info *info, int *i);
 
 // signals
 void	estat(int i, t_info *info);
@@ -207,6 +208,8 @@ void	act_block(t_token *token, t_info *info);
 int		line_condition(char **line, t_token *token,
 			t_info *info);
 void	signal_reciever(t_info *info);
+int		update_pwd(char ***matrix, t_info *info);
+int		update_oldpwd(char ***matrix, t_info *info);
 
 // free
 void	free3(char ***matrix);

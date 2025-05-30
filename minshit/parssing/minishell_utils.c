@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:11:07 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 17:05:08 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:00:29 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ int	first_setting(t_info *info, int ac, char **av, char **env)
 		return (-1);
 	}
 	form_env(env, info);
-	info->path = save_paath(info->env);
 	info->exit_status = 0;
 	return (0);
 }
 
 void	last_setting(t_info *info)
 {
-	free(info->path);
 	free_mat(info->env);
 	close (1);
 	close (2);

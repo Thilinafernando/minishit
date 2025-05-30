@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:46:45 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 22:50:08 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:33:06 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*home_path(t_info *info)
 	char	*str;
 
 	i = 0;
+	str = NULL;
 	while (info->env[i])
 	{
 		if (ft_strncmp(info->env[i], "HOME=", 5) == 0)
@@ -97,20 +98,14 @@ void	ft_cd(char **args, t_info *info)
 {
 	char	*home;
 
+	home = NULL;
 	home = home_path(info);
 	if (args[1] && args[2])
-	{
-		write(2, "MINISHELL: cd: too many arguments\n", 34);
-		return (free(home), estat(1, info));
-	}
+		return (write(2, "MINISHELL: cd: too many arguments\n", 34),
+			free(home), estat(1, info));
 	if (args[1] == NULL || args[1][0] == '\0'
 			|| (ft_strcmp(args[1], "~") == 0))
-	{
-		update_oldpwd(&info->env, info);
-		chdir((const char *)home);
-		update_pwd(&info->env, info);
-		return (free(home), estat(0, info));
-	}
+		cd_home(info, &home);
 	else if (args[1])
 	{
 		update_oldpwd(&info->env, info);

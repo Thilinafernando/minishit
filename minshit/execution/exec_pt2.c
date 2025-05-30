@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:59:05 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/28 23:05:02 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:50:33 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int	count_exec_blocks(char ***exec)
 	return (count);
 }
 
-void	init_exectution(int (*cpipe)[2], t_info *info)
+void	init_exectution(t_info *info)
 {
-	(*cpipe)[0] = -1;
-	(*cpipe)[1] = -1;
+	info->cpipe[0] = -1;
+	info->cpipe[1] = -1;
 	info->fd_in_out[0] = dup(STDIN_FILENO);
 	info->fd_in_out[1] = dup(STDOUT_FILENO);
 	info->count = count_exec_blocks(info->exec);
@@ -62,7 +62,7 @@ void	init_exectution(int (*cpipe)[2], t_info *info)
 	info->flag = 0;
 }
 
-void	fork_block(t_info *info, pid_t *pid, int (*cpipe)[2], int *i)
+void	fork_block(t_info *info, pid_t *pid, int *i)
 {
 	(*pid) = fork();
 	if ((*pid) == -1)
@@ -72,9 +72,9 @@ void	fork_block(t_info *info, pid_t *pid, int (*cpipe)[2], int *i)
 		exit(1);
 	}
 	if ((*pid) == 0)
-		child_block(info, i, cpipe);
+		child_block(info, i);
 	else
-		parent_block(info, i, (*pid), cpipe);
+		parent_block(info, i, (*pid));
 }
 
 void	final_block(t_info *info)

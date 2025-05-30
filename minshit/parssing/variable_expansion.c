@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:29:08 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/28 23:00:18 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:03:33 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,18 @@ t_token	*handle_env_variable(char *input, int *i,
 		var_value = mdollar("?", ctx->info);
 		*i += 2;
 	}
-	else
+	else if (input[*i + 1] && (ft_isalnum(input[*i + 1])
+			|| input[*i + 1] == '_'))
+	{
 		var_value = get_named_var_value(input, i, ctx->info);
-	if (!var_value)
-		var_value = ft_strdup("");
+		if (!var_value)
+			var_value = ft_strdup("");
+	}
+	else
+	{
+		var_value = ft_strdup("$");
+		(*i)++;
+	}
 	head = join_word_segment(var_value, head,
 			ctx->current_word_token, TOKEN_VAR);
 	return (head);
@@ -76,8 +84,14 @@ int	process_variable(char *input, int *i, t_info *info, char **full_segment)
 		var_value = mdollar("?", info);
 		*i += 2;
 	}
+	else if (input[*i + 1] && (ft_isalnum(input[*i + 1])
+			|| input[*i + 1] == '_'))
+		var_value = process_named_variable(input, i ,info);
 	else
-		var_value = process_named_variable(input, i, info);
+	{
+		var_value = ft_strdup("$");
+		(*i)++;
+	}
 	if (var_value)
 	{
 		*full_segment = join_and_free(*full_segment, var_value);

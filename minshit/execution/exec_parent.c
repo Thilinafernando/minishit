@@ -6,13 +6,13 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:56:50 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/28 23:00:41 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:50:01 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	parent_block(t_info *info, int *i, pid_t pid, int (*cpipe)[2])
+void	parent_block(t_info *info, int *i, pid_t pid)
 {
 	info->pids[info->pid_counts++] = pid;
 	while (info->exec[info->mat])
@@ -28,8 +28,8 @@ void	parent_block(t_info *info, int *i, pid_t pid, int (*cpipe)[2])
 		close(info->prevpipe);
 	if ((*i) != (info->count -1))
 	{
-		close((*cpipe)[1]);
-		info->prevpipe = (*cpipe)[0];
+		close(info->cpipe[1]);
+		info->prevpipe = info->cpipe[0];
 	}
 	if (info->fd_in_child != -420)
 		close(info->fd_in_child);
