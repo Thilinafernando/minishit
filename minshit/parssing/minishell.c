@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:10:33 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/30 16:35:44 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:05:17 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int ac, char **av, char **env)
 	t_info	info;
 	char	*line;
 
+	token = NULL;
 	if (first_setting(&info, ac, av, env) == -1)
 		return (1);
 	using_history();

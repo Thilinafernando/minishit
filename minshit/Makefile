@@ -23,14 +23,15 @@ RED = redirections/redirections.c heredoc.c heredoc_utils.c heredoc_utils2.c ftt
 
 UTILSDIR = Utils/
 UTILS = Utils/refresh_redirections.c ft_signal.c utils_pipe.c ft_pipe.c free.c \
-		testing_utils.c dollar.c export_utils.c export_utils2.c unset_utils.c\
+		testing_utils.c testing_utils2.c dollar.c export_utils.c export_utils2.c unset_utils.c\
 
 SRCDIR = built-ins/
 SRC = built-ins/ft_pwd.c ft_env.c ft_cd.c ft_export.c ft_unset.c ft_echo.c \
 		ft_exit.c \
 
 PARSDIR = parssing/
-PRC = parssing/quote_processing.c syntax.c token_handlers.c token_utils.c tokenizer_core.c utils.c variable_expansion.c minishell.c
+PRC = parssing/quote_processing.c syntax.c token_handlers.c token_utils.c tokenizer_core.c utils.c variable_expansion.c minishell.c \
+		minishell_utils.c \
 
 ALL_SRC = $(SRC) $(PRC) $(EXEC) $(UTILS) $(RED)
 
