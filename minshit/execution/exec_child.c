@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:54:04 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 18:49:35 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:40:30 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	child_pt2(t_info *info)
 	if (info->fd_in_child != -420)
 	{
 		if (dup2(info->fd_in_child, 0) == -1)
-			return (write(2, "Minishell: error dup2\n", 22)
+			return (write(2, "1Minishell: error dup2\n", 22)
 				, free_all(info), exit(1));
 		close(info->fd_in_child);
 	}

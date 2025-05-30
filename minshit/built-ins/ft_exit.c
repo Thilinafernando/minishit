@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 18:23:50 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 20:42:25 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:41:08 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	exit_arg_checks(char **args, t_info *info)
 			write(2, args[1], ft_strlen(args[1]));
 			write(2, ": numeric argument required\n", 28);
 			padre(info);
-			exit(1);
+			exit(2);
 		}
 	}
 	if (args[2])

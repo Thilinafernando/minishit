@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 01:31:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 21:29:12 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:20:43 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@ void	cd_home(t_info *info, char **home)
 		return (write(2, "Minishell: Home not set\n", 24),
 			estat(1, info));
 	update_oldpwd(&info->env, info);
-	chdir((const char *)(*home));
+	if (chdir((const char *)(*home)) == -1)
+	{
+		write(2, "Minishell: cd: ", 15);
+		write(2, (*home), ft_strlen((*home)));
+		write(2, ": ", 2);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 1);
+		return (free((*home)), estat(1, info));
+	}
 	update_pwd(&info->env, info);
 	return (free(*home), estat(0, info));
 }

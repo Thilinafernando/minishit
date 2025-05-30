@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:09:42 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/30 21:30:13 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:31:23 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int		is_directory(const char *path);
 int		builtout_re(char ***matrix, t_info *info);
 int		is_builtin(char **matrix);
 int		is_builtout(char ***matrix, t_info *info);
-int		is_only_redirection(char ***matrix);
+int		is_only_redirection(char ***matrix, t_info *info);
 void	block_only_rd(t_info *info);
 void	block_rd(t_info *info);
 void	one_exec(char **command, t_info *info, int fd[2]);

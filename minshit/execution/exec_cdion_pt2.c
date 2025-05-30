@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 22:02:24 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 18:04:18 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:30:55 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	is_builtout(char ***matrix, t_info *info)
 	return (i);
 }
 
-int	is_only_redirection(char ***matrix)
+int	is_only_redirection(char ***matrix, t_info *info)
 {
 	int	i;
 
-	i = 0;
+	i = info->mat;
 	while (matrix[i] && matrix[i][0][0] != '|')
 	{
 		if (!(matrix[i][0]) ||
@@ -93,6 +93,7 @@ void	block_only_rd(t_info *info)
 		info->fd_out_child = -420;
 		info->mat++;
 	}
+	info->flag = 1;
 }
 
 void	block_rd(t_info *info)

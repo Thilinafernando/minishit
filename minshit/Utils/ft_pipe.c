@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:52:49 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 18:02:56 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:23:00 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ static int	conditions(char *command)
 			{
 				write(2, "Minishell: ", 11);
 				write(2, command, ft_strlen(command));
-				write(2, ": No such directory\n", 20);
+				write(2, strerror(errno), ft_strlen(strerror(errno)));
+				write(2, "\n", 1);
 			}
 			return (-1);
 		}

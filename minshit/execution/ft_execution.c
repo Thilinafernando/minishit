@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:29:40 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/30 18:50:54 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:35:24 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	execution_half(t_info *info, int *i)
 {
-	if (is_only_redirection(info->exec) == 0)
+	if (is_only_redirection(info->exec, info) == 0)
 	{
 		block_only_rd(info);
-		return (-1);
+		return (-3);
 	}
 	if (info->count == 1)
 	{
@@ -58,10 +58,9 @@ void	ft_execution(t_info *info)
 			break ;
 		if (f == -2)
 			return ;
-		block_rd(info);
+		if (f != -3)
+			block_rd(info);
 		ft_remove(info->exec);
-		if (!info->exec[info->mat] || info->exec[info->mat][0][0] == '|')
-			break ;
 		fork_block(info, &pid, &i);
 		i++;
 	}
