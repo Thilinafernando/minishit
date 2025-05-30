@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:25:55 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/28 22:59:51 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:11:16 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*handle_quote_end(char *input, int *i, int content_start,
 		return (NULL);
 	if (!input[*i])
 	{
-		write(2, "minishell: syntax error: unclosed double quote\n", 47);
+		write(2, "Minishell: syntax error: unclosed double quote\n", 47);
 		free(full_segment);
 		return (NULL);
 	}

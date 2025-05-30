@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:29:08 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/30 19:03:33 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:07:44 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	process_variable(char *input, int *i, t_info *info, char **full_segment)
 	}
 	else if (input[*i + 1] && (ft_isalnum(input[*i + 1])
 			|| input[*i + 1] == '_'))
-		var_value = process_named_variable(input, i ,info);
+		var_value = process_named_variable(input, i, info);
 	else
 	{
 		var_value = ft_strdup("$");
