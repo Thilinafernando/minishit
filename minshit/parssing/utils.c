@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 19:55:30 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/28 23:00:14 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:34:44 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,10 @@ t_token	*get_last_token(t_token *head)
 	while (head->next)
 		head = head->next;
 	return (head);
+}
+
+void	signal_reciever(t_info *info)
+{
+	info->exit_status = 130;
+	g_signal_status = 0;
 }

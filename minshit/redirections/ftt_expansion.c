@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:01:54 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 17:47:15 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:53:20 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*append_and_free(char *dst, char *segment)
 	return (temp);
 }
 
-void	append_variable(char **result, char *line, int *i, int *start, t_info *info)
+void	append_variable(int *i, char **result, int *start, t_info *info)
 {
 	char	*segment;
 	char	*var;
@@ -51,14 +51,14 @@ void	append_variable(char **result, char *line, int *i, int *start, t_info *info
 
 	if (*i > *start)
 	{
-		segment = ft_substr(line, *start, *i - *start);
-		*result = append_and_free(*result, segment);
+		segment = ft_substr((info->line), *start, *i - *start);
+		(*result) = append_and_free(*(result), segment);
 	}
 	(*i)++;
-	var = get_var_name(line, i);
+	var = get_var_name((info->line), i);
 	val = mdollar(var, info);
 	free(var);
-	*result = append_and_free(*result, val);
+	*(result) = append_and_free(*(result), val);
 	*start = *i;
 }
 
@@ -70,14 +70,14 @@ char	*expand_dollar1(char *line, t_info *info)
 	char	*segment;
 
 	i = 0;
-	start = 0;
 	result = NULL;
+	start = 0;
 	while (line[i])
 	{
 		if (line[i] == '$'
 			&& (line[i + 1] == '?' || ft_isalpha(line[i + 1])
 				|| line[i + 1] == '_'))
-			append_variable(&result, line, &i, &start, info);
+			append_variable(&i, &result, &start, info);
 		else
 			i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:15:16 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 17:56:14 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:57:26 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	estat(int i, t_info *info)
 
 void	sstat(int i)
 {
-	signal_status = i;
+	g_signal_status = i;
 }
 
 void	ctrl_c_here(int sig)

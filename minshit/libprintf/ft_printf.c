@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkurukul <tkurukul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 18:07:57 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/24 19:29:42 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:08:58 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static int	ft_check(int fd, const char c, va_list args)
 	return (count);
 }
 
-
-int	ft_printf(int fd,const char *convs, ...)
+int	ft_printf(int fd, const char *convs, ...)
 {
 	va_list		args;
 	int			i;

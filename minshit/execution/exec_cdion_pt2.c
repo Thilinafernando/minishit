@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 22:02:24 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 19:19:19 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:32:21 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ int	is_only_redirection(char ***matrix)
 
 void	block_only_rd(t_info *info)
 {
+	int	i;
+
 	while (info->exec[info->mat])
 	{
-		ft_redirections(info->exec[info->mat], info);
+		i = ft_redirections(info->exec[info->mat], info);
+		if (i == -1)
+			return ;
 		if (info->fd_in_child != -420)
 			close(info->fd_in_child);
 		if (info->fd_out_child != -420)

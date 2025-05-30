@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 18:16:54 by ilmahjou          #+#    #+#             */
-/*   Updated: 2025/05/28 23:00:07 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:35:05 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*extract_word_segment(char *input, int *i)
 		return (ft_substr(input, start, *i - start));
 	return (NULL);
 }
-
+/*
 void	debug_print_tokens(t_token *tokens)
 {
 	int	i;
@@ -140,4 +140,4 @@ void	debug_print_tokens(t_token *tokens)
 			i++, tokens->content, tokens->type);
 		tokens = tokens->next;
 	}
-}
+} */

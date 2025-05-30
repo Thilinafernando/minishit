@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:40:44 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 18:45:50 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:57:16 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	err_fd_heredoc(char **filename)
 
 void	err_heredoc_null(char **exec, char *str)
 {
-	if (!str && signal_status != 130)
+	if (!str && g_signal_status != 130)
 	{
 		write(2, "Minishell: warning: here-document\
 			delimited by end-of-file (wanted ", 67);

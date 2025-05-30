@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 01:47:10 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 22:54:45 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:36:27 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,6 @@ void	copy_loop(char **args, char ***tmp)
 		i++;
 	}
 	(*tmp)[j] = NULL;
-}
-
-void	fill_null(char ***tmp, int count)
-{
-	int		x;
-
-	x = 0;
-	while (x <= count)
-	{
-		(*tmp)[x] = NULL;
-		x++;
-	}
 }
 
 void	ft_export(t_info *info, char **args)

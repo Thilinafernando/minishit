@@ -6,7 +6,7 @@
 /*   By: tkurukul <thilinaetoro4575@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:52:49 by tkurukul          #+#    #+#             */
-/*   Updated: 2025/05/29 23:00:08 by tkurukul         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:38:44 by tkurukul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	conditions(char *command)
 
 char	*abs_path(char *command, t_info *info)
 {
-	int	i;
+	int		i;
 	char	**matrix;
 	char	*str;
 
